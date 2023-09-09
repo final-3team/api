@@ -1,8 +1,7 @@
-package com.smartfactory.apiserver.api.service.impl;
+package com.smartfactory.apiserver.api.sample.service.impl;
 
-import com.smartfactory.apiserver.api.dto.SampleDTO;
-import com.smartfactory.apiserver.api.dto.SampleDTO.GetTBDataResponse;
-import com.smartfactory.apiserver.api.service.SampleService;
+import com.smartfactory.apiserver.api.sample.dto.SampleDTO.GetTBDataResponse;
+import com.smartfactory.apiserver.api.sample.service.SampleService;
 import com.smartfactory.apiserver.domain.database.entity.TBTestEntity;
 import com.smartfactory.apiserver.domain.database.repository.TBTestRepository;
 import lombok.RequiredArgsConstructor;

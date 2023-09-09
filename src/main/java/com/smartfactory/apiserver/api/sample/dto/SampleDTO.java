@@ -1,4 +1,4 @@
-package com.smartfactory.apiserver.api.dto;
+package com.smartfactory.apiserver.api.sample.dto;
 
 import com.smartfactory.apiserver.common.response.ApiBaseResponse;
 import io.swagger.v3.oas.annotations.media.Schema;

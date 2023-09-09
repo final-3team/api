@@ -1,24 +1,19 @@
-package com.smartfactory.apiserver.api.controller;
+package com.smartfactory.apiserver.api.sample.controller;
 
-import com.smartfactory.apiserver.api.dto.SampleDTO.GetTBDataRequest;
-import com.smartfactory.apiserver.api.dto.SampleDTO.GetTBDataResponse;
-import com.smartfactory.apiserver.api.service.SampleService;
-import com.smartfactory.apiserver.api.service.impl.SampleServiceImpl;
+import com.smartfactory.apiserver.api.sample.dto.SampleDTO.GetTBDataRequest;
+import com.smartfactory.apiserver.api.sample.dto.SampleDTO.GetTBDataResponse;
+import com.smartfactory.apiserver.api.sample.service.SampleService;
 import com.smartfactory.apiserver.common.response.ResponseCode;
-import com.smartfactory.apiserver.domain.database.entity.TBTestEntity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
