@@ -1,6 +1,6 @@
 package com.smartfactory.apiserver.common.exception.auth;
 
-import com.smartfactory.apiserver.common.response.ResponseCode;
+import com.smartfactory.apiserver.common.response.ApiResponseCode;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -8,11 +8,11 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper=false)
 public class AuthException extends RuntimeException{
-    private ResponseCode responseCode;
+    private ApiResponseCode responseCode;
     private String message;
 
     @Builder
-    public AuthException(ResponseCode responseCode, String message) {
+    public AuthException(ApiResponseCode responseCode, String message) {
         super(message);
         this.responseCode = responseCode;
         this.message = message;

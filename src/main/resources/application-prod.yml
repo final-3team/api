@@ -56,14 +56,13 @@ spring:
     livereload:
       enabled: true
 
-#spring docs 설정
-springdoc:
-  swagger-ui:
-    path: swagger-ui.html
-  api-docs:
-    enabled: true
-    path: /api-docs
-  cache:
-    disabled: false
-  override-with-generic-response: false
+#JWT
+jwt:
+  header: Authorization
+  secret: Zpdlvmzmfl123tmxhrahdj123rmfodlxmgkdnsem123rmfkskxlADSDFQadfQEwQQAdsAZpdlvmzmfl123tmxhrahdj123rmfodlxmgkdnsem123rmfkskxlADSDFQadfQEwQQAdsAZpdlvmzmfl123tmxhrahdj123rmfodlxmgkdnsem123rmfkskxlADSDFQadfQEwQQAdsA
+  token-validity-in-second: 129600000
+
+
+
+
 

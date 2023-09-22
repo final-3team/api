@@ -22,4 +22,10 @@ public class StringUtil {
         }
         return value;
     }
+
+    public static String generateRefreshToken(){
+        UUID uuid = UUID.randomUUID();
+        return uuid.toString();
+    }
+
 }

@@ -42,7 +42,7 @@ spring:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     database: mysql
     hibernate:
-      ddl-auto: validate
+      ddl-auto: none
       jdbc:
         order_inserts: true
         order_updates: true
@@ -56,15 +56,13 @@ spring:
     livereload:
       enabled: true
 
-#spring docs 설정
-springdoc:
-  swagger-ui:
-    path: swagger-ui.html
-  api-docs:
-    enabled: true
-    path: /api-docs
-  cache:
-    disabled: false
-  override-with-generic-response: false
+#JWT
+jwt:
+  header: Authorization
+  secret: Zpdlvmzmfl123tmxhrahdj123rmfodlxmgkdnsem123rmfkskxlADSDFQadfQEwQQAdsAZpdlvmzmfl123tmxhrahdj123rmfodlxmgkdnsem123rmfkskxlADSDFQadfQEwQQAdsAZpdlvmzmfl123tmxhrahdj123rmfodlxmgkdnsem123rmfkskxlADSDFQadfQEwQQAdsA
+  token-validity-in-second: 129600000
+
+
+
 
 

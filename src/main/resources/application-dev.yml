@@ -56,27 +56,10 @@ spring:
     livereload:
       enabled: true
 
-#spring docs 설정
-springdoc:
-  swagger-ui:
-    path: swagger-ui.html
-  api-docs:
-    enabled: true
-    path: /api-docs
-  cache:
-    disabled: false
-  override-with-generic-response: false
+#JWT
+jwt:
+  header: Authorization
+  secret: Zpdlvmzmfl123tmxhrahdj123rmfodlxmgkdnsem123rmfkskxlADSDFQadfQEwQQAdsAZpdlvmzmfl123tmxhrahdj123rmfodlxmgkdnsem123rmfkskxlADSDFQadfQEwQQAdsAZpdlvmzmfl123tmxhrahdj123rmfodlxmgkdnsem123rmfkskxlADSDFQadfQEwQQAdsA
+  token-validity-in-second: 129600000
 
-firebase:
-  account-key: /home/ec2-user/keyword-api/firebase_service_account_key.json
-  service-id: firebase-adminsdk-qwwdw@marketdoctor-f5a69.iam.gserviceaccount.com
 
-#3rd-party url
-api-info:
-  naver:
-    news: https://openapi.naver.com/v1/search/news.json
-    blog: https://openapi.naver.com/v1/search/blog.json
-  kakao:
-    oauth-token : https://kauth.kakao.com/oauth/token
-    redirect-url : https://desk.marketdoctor.ai/auth/oauth/callback
-    user-profile : https://kapi.kakao.com/v2/user/me
