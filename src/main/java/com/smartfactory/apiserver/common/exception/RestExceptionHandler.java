@@ -1,7 +1,5 @@
 package com.smartfactory.apiserver.common.exception;
 
-import com.smartfactory.apiserver.common.exception.auth.AuthException;
-import com.smartfactory.apiserver.common.exception.auth.ServiceException;
 import com.smartfactory.apiserver.common.response.ApiResponseCode;
 import com.smartfactory.apiserver.common.response.BaseResponse;
 import com.smartfactory.apiserver.common.response.RestApiResponse;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.ConstraintViolationException;
 
 @RestControllerAdvice(annotations= RestController.class)
 @Slf4j
@@ -27,7 +24,7 @@ public class RestExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Object handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+    public ResponseEntity<?> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         String errorMessage = e.getBindingResult()
                 .getAllErrors()
                 .get(0)
