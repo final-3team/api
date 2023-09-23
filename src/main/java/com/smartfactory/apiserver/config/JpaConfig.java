@@ -28,11 +28,7 @@ public class JpaConfig {
 
     @Autowired
     private DataSource datasource;
-
-    @Bean
-    public JPAQueryFactory jpaQueryFactory(EntityManager em) {
-        return new JPAQueryFactory(em);
-    }
+    
 
     @Bean(name = "entityManagerFactory")
     @Primary
