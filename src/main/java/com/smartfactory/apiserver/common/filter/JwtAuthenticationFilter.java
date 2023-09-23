@@ -46,9 +46,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if(token != null && tokenValidation){
             Authentication authentication = jwtTokenProvider.getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(authentication);
-        }else if(token == null){
-            Authentication authentication = jwtTokenProvider.getVisitorAuthentication();
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+        }else{
+            throw new RuntimeException();
         }
 
         filterChain.doFilter(request, response);
@@ -68,17 +67,18 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if(StringUtils.isEmpty(token)){
             token = null;
         }
-        String clientId = request.getHeader("client-id");
-        String clientSecret = request.getHeader("client-secret");
-        if( clientId == null || clientSecret == null){
-            request.setAttribute("exception", "client");
-            throw new RuntimeException();
-        }
-        if( clientId.equals(Constant.CLIENT_ID) && clientSecret.equals(Constant.CLIENT_SECRET )){
-            return token;
-        }else{
-            request.setAttribute("exception", "client");
-            throw new RuntimeException();
-        }
+        return token;
+//        String clientId = request.getHeader("client-id");
+//        String clientSecret = request.getHeader("client-secret");
+//        if( clientId == null || clientSecret == null){
+//            request.setAttribute("exception", "client");
+//            throw new RuntimeException();
+//        }
+//        if( clientId.equals(Constant.CLIENT_ID) && clientSecret.equals(Constant.CLIENT_SECRET )){
+//            return token;
+//        }else{
+//            request.setAttribute("exception", "client");
+//            throw new RuntimeException();
+//        }
     }
 }

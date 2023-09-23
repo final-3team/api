@@ -52,9 +52,9 @@ public class AuthController {
         }
     }
 
-    @PostMapping(value = "/test", consumes = "application/json", produces = "application/json")
+    @GetMapping(value = "/test")
     @ResponseBody
-    @PreAuthorize("hasAnyRole('ROLE_GENERAL')")
+    @PreAuthorize("hasAnyRole('ROLE_STAFF', 'ROLE_ADMIN')")
     public ResponseEntity<?> tokentest() {
         RestApiResponse restApiResponse = new RestApiResponse();
         restApiResponse.setResult(new BaseResponse(ApiResponseCode.SUCCESS), "TOKEN TEST");

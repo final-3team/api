@@ -32,6 +32,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
             apiResponse.setResult(new BaseResponse(ApiResponseCode.INVALID_API_ACCESS_TOKEN));
         }else if(exception.equals("expire")){
             apiResponse.setResult(new BaseResponse(ApiResponseCode.ACCESS_TOKEN_EXPIRED));
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }else if(exception.equals("client")){
             apiResponse.setResult(new BaseResponse(ApiResponseCode.INVALID_CLIENT_ID_OR_CLIENT_SECRET));
         }else{
