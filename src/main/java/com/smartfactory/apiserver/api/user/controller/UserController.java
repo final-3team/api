@@ -13,17 +13,8 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RequiredArgsConstructor
 public class UserController {
-    @PostMapping(value ="/sign-in", produces = "application/json")
-    public ResponseEntity<?> signinUser(@RequestParam Long seq){
-        try {
-            return new ResponseEntity<>(null, HttpStatus.OK);
-        }catch (Exception e){
-            return new ResponseEntity<>(null, HttpStatus.OK);
-        }
-    }
-
     @GetMapping(value = "user-info", produces = "application/json")
-    public ResponseEntity<?> getUserInformation(){
+    public ResponseEntity<?> getUserInformation(@RequestParam Long userSeq){
         return null;
     }
 }

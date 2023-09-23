@@ -1,20 +1,24 @@
 package com.smartfactory.apiserver.config;
 
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 
+import javax.persistence.EntityManager;
 import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
+@EnableJpaAuditing
 @EnableJpaRepositories(
         basePackages="com.smartfactory.apiserver.domain.database.repository",  //repository를 관리할 패키지 명시
         entityManagerFactoryRef = "entityManagerFactory", //EntityManagerFactory
@@ -24,6 +28,11 @@ public class JpaConfig {
 
     @Autowired
     private DataSource datasource;
+
+    @Bean
+    public JPAQueryFactory jpaQueryFactory(EntityManager em) {
+        return new JPAQueryFactory(em);
+    }
 
     @Bean(name = "entityManagerFactory")
     @Primary

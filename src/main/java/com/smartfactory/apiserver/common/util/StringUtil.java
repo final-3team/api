@@ -15,13 +15,6 @@ public class StringUtil {
         }
         return false;
     }
-    public static String replaceKakaoPhoneNumber(String phoneNumber){
-        String value = null;
-        if(phoneNumber != null){
-            value = "0" + phoneNumber.replace("+82", "").trim();
-        }
-        return value;
-    }
 
     public static String generateRefreshToken(){
         UUID uuid = UUID.randomUUID();
