@@ -1,8 +1,9 @@
-package com.smartfactory.apiserver.api.auth.service;
+package com.smartfactory.apiserver.api.auth.service.impl;
 
 import com.smartfactory.apiserver.api.auth.dto.AuthDTO.SignInRequest;
 import com.smartfactory.apiserver.api.auth.dto.AuthDTO.SignUpRequest;
 import com.smartfactory.apiserver.api.auth.dto.AuthDTO.TokenInfo;
+import com.smartfactory.apiserver.api.auth.service.AuthService;
 import com.smartfactory.apiserver.common.constant.CommonCode.UserAuthority;
 import com.smartfactory.apiserver.common.constant.CommonCode.UserStatus;
 import com.smartfactory.apiserver.common.exception.BusinessException;
@@ -29,8 +30,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
+import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,6 +46,9 @@ public class AuthServiceImpl implements AuthService, UserDetailsService {
     private final BCryptPasswordEncoder passwordEncoder;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
+
+    private final DataSource dataSource;
+
 
     @Transactional
     public void signUp(SignUpRequest signUpRequest){
@@ -72,8 +77,11 @@ public class AuthServiceImpl implements AuthService, UserDetailsService {
         }
     }
 
-    public TokenInfo signIn(SignInRequest signInRequest){
 
+
+
+    @Transactional(readOnly = true)
+    public TokenInfo signIn(SignInRequest signInRequest){
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(signInRequest.getUserId(), signInRequest.getPassword());
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
@@ -86,7 +94,7 @@ public class AuthServiceImpl implements AuthService, UserDetailsService {
         return jwtToken;
     }
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserEntity userEntity = userRepository.findUserEntityByUserId(username).orElseThrow( () -> new BusinessException(ApiResponseCode.FAILED_SIGN_IN_USER, HttpStatus.BAD_REQUEST));
         User userDetail = this.createUser(userEntity);
