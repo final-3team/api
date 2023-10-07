@@ -6,6 +6,7 @@ import com.querydsl.jpa.JPQLQuery;
 import com.smartfactory.apiserver.api.sample.dto.UserDTO.Authority;
 import com.smartfactory.apiserver.api.sample.dto.UserDTO.UserResponse;
 
+import com.smartfactory.apiserver.common.util.AES256Util;
 import com.smartfactory.apiserver.domain.database.entity.QUserAuthorityEntity;
 import com.smartfactory.apiserver.domain.database.entity.QUserEntity;
 
@@ -63,7 +64,15 @@ public class CustomUserRepositoryImpl extends QuerydslRepositorySupport implemen
             JPQLQuery<Long> count = from(userEntity)
                     .select(userEntity.count());
             long totalCount = count.fetchCount();
-            log.debug("");
+
+            result.forEach( item -> {
+                try {
+                    item.setEmailAddress(AES256Util.decrypt(item.getEmailAddress()));
+                    item.setPhoneNumber(AES256Util.decrypt(item.getPhoneNumber()));
+                }catch(Exception e){
+                    log.error(e.getMessage());
+                }
+            });
 
             return new PageImpl<>(result, pageable, totalCount);
         }catch (Exception e){
