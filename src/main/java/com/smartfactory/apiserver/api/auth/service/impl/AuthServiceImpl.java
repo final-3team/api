@@ -4,6 +4,7 @@ import com.smartfactory.apiserver.api.auth.dto.AuthDTO.SignInRequest;
 import com.smartfactory.apiserver.api.auth.dto.AuthDTO.SignUpRequest;
 import com.smartfactory.apiserver.api.auth.dto.AuthDTO.TokenInfo;
 import com.smartfactory.apiserver.api.auth.service.AuthService;
+import com.smartfactory.apiserver.api.sample.dto.UserDTO.UserResponse;
 import com.smartfactory.apiserver.common.constant.CommonCode.UserAuthority;
 import com.smartfactory.apiserver.common.constant.CommonCode.UserStatus;
 import com.smartfactory.apiserver.common.exception.BusinessException;
@@ -17,6 +18,8 @@ import com.smartfactory.apiserver.domain.database.repository.UserAuthorityReposi
 import com.smartfactory.apiserver.domain.database.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -93,6 +96,7 @@ public class AuthServiceImpl implements AuthService, UserDetailsService {
         userRepository.save(userEntity);
         return jwtToken;
     }
+
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -107,6 +111,11 @@ public class AuthServiceImpl implements AuthService, UserDetailsService {
             grantedAuthorities.add(new SimpleGrantedAuthority(userAuthorityEntity.getAuthority().toString()));
         }
         return new User(userEntity.getUserId(), userEntity.getPassword(), grantedAuthorities);
+    }
+
+    @Override
+    public Page<UserResponse> getUsers(Pageable pageable) {
+        return userRepository.findUsers(pageable);
     }
 
 }

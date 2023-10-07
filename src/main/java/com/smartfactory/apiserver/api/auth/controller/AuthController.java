@@ -5,11 +5,15 @@ import com.smartfactory.apiserver.api.auth.dto.AuthDTO.SignInRequest;
 import com.smartfactory.apiserver.api.auth.dto.AuthDTO.SignUpRequest;
 import com.smartfactory.apiserver.api.auth.dto.AuthDTO.TokenInfo;
 import com.smartfactory.apiserver.api.auth.service.AuthService;
+import com.smartfactory.apiserver.api.sample.dto.UserDTO.UserResponse;
 import com.smartfactory.apiserver.common.response.ApiResponseCode;
 import com.smartfactory.apiserver.common.response.BaseResponse;
 import com.smartfactory.apiserver.common.response.RestApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -54,10 +58,11 @@ public class AuthController {
 
     @GetMapping(value = "/test")
     @ResponseBody
-    @PreAuthorize("hasAnyRole('ROLE_STAFF', 'ROLE_ADMIN')")
-    public ResponseEntity<?> tokentest() {
+    //@PreAuthorize("hasAnyRole('ROLE_STAFF', 'ROLE_ADMIN')")
+    public ResponseEntity<?> tokentest(Pageable pageable) {
         RestApiResponse restApiResponse = new RestApiResponse();
-        restApiResponse.setResult(new BaseResponse(ApiResponseCode.SUCCESS), "TOKEN TEST");
+        Page<UserResponse> response = authService.getUsers(pageable);
+        restApiResponse.setResult(new BaseResponse(ApiResponseCode.SUCCESS), response);
         return new ResponseEntity<>(restApiResponse, HttpStatus.OK);
     }
 }
