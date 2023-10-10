@@ -12,6 +12,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 
 import static com.smartfactory.apiserver.common.constant.CommonCode.*;
 
@@ -50,6 +51,9 @@ public class PostEntity {
 
     @Column(name = "password", length = 45)
     private String password;
+
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<CommentEntity> commentEntityList;
 
     @Builder
     public PostEntity(Long postSeq, UserEntity user, PostCategory category, String title, String body, Date createAt, Date updateAt, PostStatus status, String password) {

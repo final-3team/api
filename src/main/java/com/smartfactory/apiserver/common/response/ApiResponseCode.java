@@ -11,7 +11,10 @@ public enum ApiResponseCode {
     INVALID_PARAMETER_ERR("INVALID_PARAMETER_ERR", "invalid parameter error"),
     //COMMON
     FAILED_SIGN_UP_USER("ERR_SIGN_UP", "failed to add new user"),
-    FAILED_SIGN_IN_USER("ERR_SIGN_IN", "failed to login because userid not exist");
+    FAILED_SIGN_IN_USER("ERR_SIGN_IN", "failed to login because userid not exist"),
+    FAILED_TO_FIND_POST("ERR_FIND_POST", "failed to find post because postSeq not exist")
+
+    ;
 
     /*
      *  500번 에러는 사용자에게 나타내지 않는다. 관련된 500에러는 API서버에서 모두 핸들링해 Error메세지로 return

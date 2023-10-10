@@ -23,7 +23,7 @@ public class CommunityController {
     private final CommunityService communityService;
 
 
-    @PostMapping(value = "/create", consumes = "application/json", produces = "application/json")
+    @PostMapping(value = "/post", consumes = "application/json", produces = "application/json")
     @ResponseBody
     public ResponseEntity<?> CreatePost(@Valid @RequestBody CreatePostRequest createPostRequest) {
         communityService.createPost(createPostRequest);
@@ -31,5 +31,49 @@ public class CommunityController {
         restApiResponse.setResult(new BaseResponse(ApiResponseCode.SUCCESS));
         return new ResponseEntity<>(restApiResponse, HttpStatus.OK);
     }
+
+    @PutMapping(value = "/post", consumes = "application/json", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<?> UpdatePost(@Valid @RequestBody UpdatePostRequest updatePostRequest) {
+        communityService.updatePost(updatePostRequest);
+        RestApiResponse restApiResponse = new RestApiResponse();
+        restApiResponse.setResult(new BaseResponse(ApiResponseCode.SUCCESS));
+        return new ResponseEntity<>(restApiResponse, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/post", consumes = "application/json", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<?> GetPost(@Valid ReadPostAndCommentsRequest readPostAndCommentsRequest) {
+        ReadPostAndCommentsResponse response =  communityService.readPostAndComments(readPostAndCommentsRequest);
+        RestApiResponse restApiResponse = new RestApiResponse();
+        restApiResponse.setResult(new BaseResponse(ApiResponseCode.SUCCESS), response);
+        return new ResponseEntity<>(restApiResponse, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/comment", consumes = "application/json", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<?> CreateComment(@Valid @RequestBody CreateCommentRequest createCommentRequest){
+        communityService.createComment(createCommentRequest);
+        RestApiResponse restApiResponse = new RestApiResponse();
+        restApiResponse.setResult(new BaseResponse(ApiResponseCode.SUCCESS));
+        return new ResponseEntity<>(restApiResponse, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/postList", consumes = "application/json", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<?> GetPostList(@Valid ReadPostListRequest readPostListRequest){
+        ReadPostListResponse response =  communityService.readPostList(readPostListRequest);
+        RestApiResponse restApiResponse = new RestApiResponse();
+        restApiResponse.setResult(new BaseResponse(ApiResponseCode.SUCCESS), response);
+
+        return new ResponseEntity<>(restApiResponse,HttpStatus.OK);
+    }
+
+/*    @GetMapping(value = "/test/inventoryStatus")
+    @ResponseBody
+    public ResponseEntity<?> test1234(){
+
+    }*/
+
 
 }
