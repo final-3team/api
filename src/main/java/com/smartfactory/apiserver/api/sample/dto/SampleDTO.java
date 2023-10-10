@@ -1,11 +1,21 @@
 package com.smartfactory.apiserver.api.sample.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+import javax.validation.constraints.NotBlank;
+
 public class SampleDTO {
-    public static class SampleResponse{
-        private String userId;
-        private String userName;
-        private String phoneNumber;
-        private String emailAddress;
-        private String userStatus;
+    @Data
+    public static class GetTBDataResponse  {
+        private Long seq;
+        private String name;
+    }
+
+    @Data
+    public static class GetTBDataRequest{
+        private Long seq;
+        private String name;
     }
 }

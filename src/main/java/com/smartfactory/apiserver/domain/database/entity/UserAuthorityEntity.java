@@ -24,10 +24,10 @@ public class UserAuthorityEntity {
     private Long authoritySeq;
 
     @ManyToOne
-    @JoinColumn(name = "user_seq", referencedColumnName = "user_seq", nullable = false)
+    @JoinColumn(name = "user_seq", referencedColumnName = "user_seq")
     private UserEntity user;
 
-    @Column(name = "authority", length = 45, nullable = false)
+    @Column(name = "authority", length = 45)
     @Enumerated(EnumType.STRING)
     private UserAuthority authority;
 

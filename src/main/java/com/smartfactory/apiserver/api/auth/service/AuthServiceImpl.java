@@ -1,10 +1,8 @@
-package com.smartfactory.apiserver.api.auth.service.impl;
+package com.smartfactory.apiserver.api.auth.service;
 
 import com.smartfactory.apiserver.api.auth.dto.AuthDTO.SignInRequest;
 import com.smartfactory.apiserver.api.auth.dto.AuthDTO.SignUpRequest;
 import com.smartfactory.apiserver.api.auth.dto.AuthDTO.TokenInfo;
-import com.smartfactory.apiserver.api.auth.service.AuthService;
-import com.smartfactory.apiserver.api.sample.dto.UserDTO.UserResponse;
 import com.smartfactory.apiserver.common.constant.CommonCode.UserAuthority;
 import com.smartfactory.apiserver.common.constant.CommonCode.UserStatus;
 import com.smartfactory.apiserver.common.exception.BusinessException;
@@ -18,8 +16,6 @@ import com.smartfactory.apiserver.domain.database.repository.UserAuthorityReposi
 import com.smartfactory.apiserver.domain.database.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -33,9 +29,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import javax.sql.DataSource;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,9 +44,6 @@ public class AuthServiceImpl implements AuthService, UserDetailsService {
     private final BCryptPasswordEncoder passwordEncoder;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
-
-    private final DataSource dataSource;
-
 
     @Transactional
     public void signUp(SignUpRequest signUpRequest){
@@ -80,11 +72,8 @@ public class AuthServiceImpl implements AuthService, UserDetailsService {
         }
     }
 
-
-
-
-    @Transactional(readOnly = true)
     public TokenInfo signIn(SignInRequest signInRequest){
+
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(signInRequest.getUserId(), signInRequest.getPassword());
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
@@ -96,9 +85,8 @@ public class AuthServiceImpl implements AuthService, UserDetailsService {
         userRepository.save(userEntity);
         return jwtToken;
     }
-
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserEntity userEntity = userRepository.findUserEntityByUserId(username).orElseThrow( () -> new BusinessException(ApiResponseCode.FAILED_SIGN_IN_USER, HttpStatus.BAD_REQUEST));
         User userDetail = this.createUser(userEntity);
@@ -111,11 +99,6 @@ public class AuthServiceImpl implements AuthService, UserDetailsService {
             grantedAuthorities.add(new SimpleGrantedAuthority(userAuthorityEntity.getAuthority().toString()));
         }
         return new User(userEntity.getUserId(), userEntity.getPassword(), grantedAuthorities);
-    }
-
-    @Override
-    public Page<UserResponse> getUsers(Pageable pageable) {
-        return userRepository.findUsers(pageable);
     }
 
 }

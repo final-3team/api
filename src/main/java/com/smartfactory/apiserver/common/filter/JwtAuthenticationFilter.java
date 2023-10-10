@@ -30,7 +30,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     Arrays.asList(
                             "/api/v2/auth/sign-up",
                             "/api/v2/auth/sign-in",
-                            "/api/v2/auth/test",
                             "/api-docs"
                     ));
 

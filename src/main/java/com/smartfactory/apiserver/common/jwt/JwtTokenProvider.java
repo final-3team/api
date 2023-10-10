@@ -2,7 +2,6 @@ package com.smartfactory.apiserver.common.jwt;
 
 import com.smartfactory.apiserver.api.auth.dto.AuthDTO.TokenInfo;
 import com.smartfactory.apiserver.common.util.StringUtil;
-import com.smartfactory.apiserver.domain.database.entity.UserEntity;
 import com.smartfactory.apiserver.domain.database.repository.UserRepository;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
@@ -48,7 +47,6 @@ public class JwtTokenProvider implements InitializingBean {
 
         long now = (new Date()).getTime();
         Date accessTokenValidity = new Date(now + this.tokenValidityInMilliseconds * 1000);
-
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim(AUTHORITIES_KEY, authorities)
