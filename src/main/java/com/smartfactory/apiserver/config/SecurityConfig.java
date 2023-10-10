@@ -14,6 +14,11 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -36,7 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+        http.csrf().disable().cors().configurationSource(corsConfigurationSource()).and()
             .exceptionHandling()
             .authenticationEntryPoint(jwtAuthenticationEntryPoint)
             .accessDeniedHandler(jwtAccessDeniedHandler)
@@ -53,11 +58,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
             .authorizeRequests()
                 .antMatchers("/favicon.ico").permitAll()
-                .antMatchers("/api/v2/auth/sign-up", "/api/v2/auth/sign-in",
+                .antMatchers("/api/v2/auth/sign-up", "/api/v2/auth/sign-in","/api/v2/auth/test",
                         "/v2/api-docs", "/swagger-resources/**", "/swagger-ui/index.html", "/swagger-ui.html","/webjars/**", "/swagger/**", "/v3/api-docs/**").permitAll()
                 .antMatchers("/actuator/**").permitAll()
             .anyRequest().authenticated()
                 .and()
                 .apply(new JwtSecurityConfig(jwtTokenProvider));
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+
+        configuration.addAllowedOriginPattern("*");
+        configuration.addAllowedHeader("*");
+        configuration.addAllowedMethod("*");
+        configuration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 }
