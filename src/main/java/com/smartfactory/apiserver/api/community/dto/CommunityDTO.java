@@ -2,6 +2,7 @@ package com.smartfactory.apiserver.api.community.dto;
 
 import com.smartfactory.apiserver.common.constant.CommonCode;
 import com.smartfactory.apiserver.domain.database.entity.CommentEntity;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
@@ -70,12 +71,13 @@ public class CommunityDTO {
         private Long page;
     }
     @Data
-    @Builder
+    @AllArgsConstructor
     public static class ReadPostListResponse{
         private List<Post> posts;
     }
 
     @Data
+    @AllArgsConstructor
     public static class Post{
         private String title;
         private String userName;
@@ -93,6 +95,12 @@ public class CommunityDTO {
     @Data
     public static class UpdateCommentRequest{
 
+    }
+
+    @Data
+    public static class DeletePostRequest{
+        @NotNull
+        private Long postSeq;
     }
 
 

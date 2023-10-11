@@ -12,7 +12,8 @@ public enum ApiResponseCode {
     //COMMON
     FAILED_SIGN_UP_USER("ERR_SIGN_UP", "failed to add new user"),
     FAILED_SIGN_IN_USER("ERR_SIGN_IN", "failed to login because userid not exist"),
-    FAILED_TO_FIND_POST("ERR_FIND_POST", "failed to find post because postSeq not exist")
+    FAILED_TO_FIND_POST("ERR_FIND_POST", "failed to find post because postSeq not exist"),
+    FAILED_TO_DELETE_POST("ERR_DELETE_POST", "failed to delete post because postSeq not exist"),
 
     ;
 

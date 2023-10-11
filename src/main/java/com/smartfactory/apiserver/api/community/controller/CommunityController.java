@@ -7,6 +7,9 @@ import com.smartfactory.apiserver.common.response.BaseResponse;
 import com.smartfactory.apiserver.common.response.RestApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +35,15 @@ public class CommunityController {
         return new ResponseEntity<>(restApiResponse, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/post")
+    @ResponseBody
+    public ResponseEntity<?> GetPost(@Valid ReadPostAndCommentsRequest readPostAndCommentsRequest) {
+        ReadPostAndCommentsResponse response = communityService.readPostAndComments(readPostAndCommentsRequest);
+        RestApiResponse restApiResponse = new RestApiResponse();
+        restApiResponse.setResult(new BaseResponse(ApiResponseCode.SUCCESS), response);
+        return new ResponseEntity<>(restApiResponse, HttpStatus.OK);
+    }
+
     @PutMapping(value = "/post", consumes = "application/json", produces = "application/json")
     @ResponseBody
     public ResponseEntity<?> UpdatePost(@Valid @RequestBody UpdatePostRequest updatePostRequest) {
@@ -41,24 +53,27 @@ public class CommunityController {
         return new ResponseEntity<>(restApiResponse, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/post", consumes = "application/json", produces = "application/json")
+    @DeleteMapping(value = "/post")
     @ResponseBody
-    public ResponseEntity<?> GetPost(@Valid ReadPostAndCommentsRequest readPostAndCommentsRequest) {
-        ReadPostAndCommentsResponse response =  communityService.readPostAndComments(readPostAndCommentsRequest);
+    public ResponseEntity<?> DeletePost(@Valid DeletePostRequest deletePostRequest) {
+        communityService.deletePost(deletePostRequest);
         RestApiResponse restApiResponse = new RestApiResponse();
-        restApiResponse.setResult(new BaseResponse(ApiResponseCode.SUCCESS), response);
+        restApiResponse.setResult(new BaseResponse(ApiResponseCode.SUCCESS));
         return new ResponseEntity<>(restApiResponse, HttpStatus.OK);
     }
 
+
     @PostMapping(value = "/comment", consumes = "application/json", produces = "application/json")
     @ResponseBody
-    public ResponseEntity<?> CreateComment(@Valid @RequestBody CreateCommentRequest createCommentRequest){
+    public ResponseEntity<?> CreateComment(@Valid @RequestBody CreateCommentRequest createCommentRequest) {
         communityService.createComment(createCommentRequest);
         RestApiResponse restApiResponse = new RestApiResponse();
         restApiResponse.setResult(new BaseResponse(ApiResponseCode.SUCCESS));
         return new ResponseEntity<>(restApiResponse, HttpStatus.OK);
     }
 
+    /*
+        pageable 방식아님
     @GetMapping(value = "/postList", consumes = "application/json", produces = "application/json")
     @ResponseBody
     public ResponseEntity<?> GetPostList(@Valid ReadPostListRequest readPostListRequest){
@@ -67,7 +82,19 @@ public class CommunityController {
         restApiResponse.setResult(new BaseResponse(ApiResponseCode.SUCCESS), response);
 
         return new ResponseEntity<>(restApiResponse,HttpStatus.OK);
+    }*/
+
+    @GetMapping(value = "/postList")
+    @ResponseBody
+    public ResponseEntity<?> GetPostList(@PageableDefault(size = 10) Pageable pageable) {
+        Page<ReadPostListResponse> response = communityService.getPosts(pageable);
+        RestApiResponse restApiResponse = new RestApiResponse();
+        restApiResponse.setResult(new BaseResponse(ApiResponseCode.SUCCESS), response);
+
+        return new ResponseEntity<>(restApiResponse, HttpStatus.OK);
     }
+
+
 
 /*    @GetMapping(value = "/test/inventoryStatus")
     @ResponseBody

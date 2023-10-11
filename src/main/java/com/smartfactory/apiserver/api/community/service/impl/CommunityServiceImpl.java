@@ -16,6 +16,8 @@ import com.smartfactory.apiserver.domain.database.repository.UserRepository;
 import com.smartfactory.apiserver.domain.database.repository.querydsl.CustomPostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -88,6 +90,21 @@ public class CommunityServiceImpl implements CommunityService {
     }
 
     @Override
+    @Transactional
+    public void deletePost(DeletePostRequest deletePostRequest) {
+        try{
+            PostEntity postEntity = validByTokenIdAndPostOwner(deletePostRequest.getPostSeq());
+
+            postEntity.setStatus(PostStatus.INACTIVE);
+
+            postRepository.save(postEntity);
+        }catch(Exception e){
+            log.error(e.getMessage());
+            throw new BusinessException(ApiResponseCode.FAILED_TO_DELETE_POST, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public ReadPostAndCommentsResponse readPostAndComments(ReadPostAndCommentsRequest readPostAndCommentsRequest) {
         PostEntity postEntity = postRepository.findById(readPostAndCommentsRequest.getPostSeq()).orElseThrow(() -> new BusinessException(ApiResponseCode.FAILED_TO_FIND_POST, HttpStatus.BAD_REQUEST));
@@ -115,11 +132,13 @@ public class CommunityServiceImpl implements CommunityService {
         return response;
     }
 
+/*
     @Override
     @Transactional(readOnly = true)
     public ReadPostListResponse readPostList(ReadPostListRequest readPostListRequest) {
         return customPostRepository.findPostListByFromNum(readPostListRequest.getPage());
     }
+*/
 
     @Override
     @Transactional
@@ -144,7 +163,10 @@ public class CommunityServiceImpl implements CommunityService {
 
     }
 
-
+    @Override
+    public Page<ReadPostListResponse> getPosts(Pageable pageable) {
+        return customPostRepository.findPosts(pageable);
+    }
 
 
     @Transactional(readOnly = true)
@@ -152,7 +174,9 @@ public class CommunityServiceImpl implements CommunityService {
         UserEntity userEntity = userRepository.findUserEntityByUserId(username).orElseThrow( () -> new BusinessException(ApiResponseCode.FAILED_SIGN_IN_USER, HttpStatus.BAD_REQUEST));
         return userEntity;
     }
-
+    
+    
+    //post의 작성자와 token의 주인이 동일 user인지 판별하는 메서드
     @Transactional(readOnly = true)
     public PostEntity validByTokenIdAndPostOwner(Long postSeq) throws UsernameNotFoundException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

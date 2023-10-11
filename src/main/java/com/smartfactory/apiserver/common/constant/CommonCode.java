@@ -75,6 +75,9 @@ public class CommonCode {
     public enum WarehouseArea{
         SEOUL_A,
         SEOUL_B,
+        BUSAN_A,
+        BUSAN_B,
+
 
     }
 
