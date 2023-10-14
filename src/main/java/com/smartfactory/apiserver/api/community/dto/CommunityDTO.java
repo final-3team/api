@@ -73,7 +73,9 @@ public class CommunityDTO {
     @Data
     @AllArgsConstructor
     public static class ReadPostListResponse{
-        private List<Post> posts;
+        private String title;
+        private String userName;
+        private Long postSeq;
     }
 
     @Data

@@ -80,18 +80,14 @@ public class CustomPostRepositoryImpl extends QuerydslRepositorySupport implemen
     public Page<ReadPostListResponse> findPosts(Pageable pageable) {
         try {
             QPostEntity postEntity = QPostEntity.postEntity;
-            List<CommunityDTO.ReadPostListResponse> result = (List<ReadPostListResponse>) from(postEntity)
+            List<ReadPostListResponse> result = (List<ReadPostListResponse>) from(postEntity)
                     .where(postEntity.status.eq(CommonCode.PostStatus.ACTIVE))
                     .orderBy(postEntity.createAt.desc())
-                    .offset(pageable.getPageSize() * pageable.getPageNumber())
                     .limit(pageable.getPageSize())
                     .transform(groupBy(postEntity.postSeq).list(Projections.constructor(ReadPostListResponse.class
-                            , list(Projections.constructor(Post.class
-                                    , postEntity.title
-                                    , postEntity.user.userName
-                                    , postEntity.postSeq
-                            ))
-                    )));
+                            , postEntity.title
+                            , postEntity.user.userName
+                            , postEntity.postSeq)));
 
             JPQLQuery<Long> count = from(postEntity).select(postEntity.count());
             long totalCount = count.fetchCount();
@@ -102,4 +98,6 @@ public class CustomPostRepositoryImpl extends QuerydslRepositorySupport implemen
             throw e;
         }
     }
+
+
 }

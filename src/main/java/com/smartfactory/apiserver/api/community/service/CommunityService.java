@@ -21,5 +21,4 @@ public interface CommunityService {
     void updateComment(UpdateCommentRequest updateCommentRequest);
 
     Page<ReadPostListResponse> getPosts(Pageable pageable);
-
 }

@@ -87,6 +87,7 @@ public class CommunityController {
     @GetMapping(value = "/postList")
     @ResponseBody
     public ResponseEntity<?> GetPostList(@PageableDefault(size = 10) Pageable pageable) {
+//        Page<ReadPostListResponse> response = communityService.getPosts(pageable);
         Page<ReadPostListResponse> response = communityService.getPosts(pageable);
         RestApiResponse restApiResponse = new RestApiResponse();
         restApiResponse.setResult(new BaseResponse(ApiResponseCode.SUCCESS), response);
