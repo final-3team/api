@@ -79,14 +79,6 @@ public class CommunityDTO {
     }
 
     @Data
-    @AllArgsConstructor
-    public static class Post{
-        private String title;
-        private String userName;
-        private Long postSeq;
-    }
-
-    @Data
     public static class CreateCommentRequest{
         @NotEmpty
         private Long postSeq;

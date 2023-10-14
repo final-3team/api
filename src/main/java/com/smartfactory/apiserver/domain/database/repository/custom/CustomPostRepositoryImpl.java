@@ -1,17 +1,10 @@
-package com.smartfactory.apiserver.domain.database.repository.querydsl;
+package com.smartfactory.apiserver.domain.database.repository.custom;
 
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPQLQuery;
-import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.smartfactory.apiserver.api.community.dto.CommunityDTO;
-import com.smartfactory.apiserver.api.sample.dto.UserDTO;
 import com.smartfactory.apiserver.common.constant.CommonCode;
-import com.smartfactory.apiserver.common.util.AES256Util;
 import com.smartfactory.apiserver.domain.database.entity.PostEntity;
 import com.smartfactory.apiserver.domain.database.entity.QPostEntity;
-import com.smartfactory.apiserver.domain.database.entity.QUserAuthorityEntity;
-import com.smartfactory.apiserver.domain.database.entity.QUserEntity;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -23,9 +16,7 @@ import java.util.List;
 
 import static com.querydsl.core.group.GroupBy.groupBy;
 import static com.querydsl.core.group.GroupBy.list;
-import static com.smartfactory.apiserver.api.community.dto.CommunityDTO.Post;
 import static com.smartfactory.apiserver.api.community.dto.CommunityDTO.ReadPostListResponse;
-import static com.smartfactory.apiserver.domain.database.entity.QPostEntity.postEntity;
 
 
 @Repository
@@ -36,11 +27,11 @@ public class CustomPostRepositoryImpl extends QuerydslRepositorySupport implemen
         super(PostEntity.class);
     }
 
-    @Override
+   /* @Override
     public ReadPostListResponse findPostListByFromNum(Long fromNum) {
 
 
-        /*
+        *//*
             JPAQueryFactory를 이용한 방법으로 spring에서 제공하는 QuerydslRepositorySupport의 방식으로 변경하기 위해 주석처리한다.
 
         List<Tuple> results = queryFactory
@@ -53,7 +44,7 @@ public class CustomPostRepositoryImpl extends QuerydslRepositorySupport implemen
                 .orderBy(postEntity.createAt.desc())
                 .offset(fromNum * 10)
                 .limit(10)
-                .fetch();*//*
+                .fetch();*//**//*
         List<Post> results = queryFactory
                 .select(Projections.bean(Post.class,
                         postEntity.title,
@@ -71,10 +62,10 @@ public class CustomPostRepositoryImpl extends QuerydslRepositorySupport implemen
         System.out.println("querydsl문 결과");
         System.out.println(results);
         System.out.println(ReadPostListResponse.builder().posts(results).build());
-        return ReadPostListResponse.builder().posts(results).build();*/
+        return ReadPostListResponse.builder().posts(results).build();*//*
         return null;
 
-    }
+    }*/
 
     @Override
     public Page<ReadPostListResponse> findPosts(Pageable pageable) {
