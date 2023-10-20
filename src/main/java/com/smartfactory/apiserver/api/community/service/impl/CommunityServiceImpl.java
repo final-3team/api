@@ -39,8 +39,6 @@ public class CommunityServiceImpl implements CommunityService {
     private final CommentRepository commentRepository;
     private final CustomPostRepository customPostRepository;
 
-    private final JwtTokenProvider jwtTokenProvider;
-
 
     @Override
     @Transactional

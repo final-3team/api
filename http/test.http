@@ -1,0 +1,52 @@
+### 1. 로그인
+POST {{api}}/api/v2/auth/sign-in
+Content-Type: application/json
+
+{
+  "userId": "{{userId}}",
+  "password": "{{password}}"
+}
+
+> {%
+    client.test("Sign-in", function () {
+        client.assert(response.status === 200, "Response status is not 200"); // 응답값이 200이면 통과
+        client.assert(response.contentType.mimeType === "application/json", "Expected 'application/json'"); // 응답값이 application/json이면 통과
+        client.assert(response.body.data.accessToken.trim().length > 0); // 토큰 길이가 0보다 크면 통과
+    });
+
+    client.log(response.body.data.accessToken.trim());
+    client.global.set("access_token", response.body.data.accessToken.trim());
+ %}
+
+### 2. 포스트 정보 보기
+GET {{api}}/api/v2/community/post?postSeq=2
+Content-Type: application/json
+Authorization: {{access_token}}
+
+> {%
+    client.test("getPost", function () {
+        client.assert(response.body.data.userName === "테스터2", "Wrong post writer");
+        client.assert(response.body.data.category === "COMMON", "Wrong post category");
+        client.assert(response.body.data.title === "test1", "Wrong post title");
+        client.assert(response.body.data.body === "수정한 내용", "Wrong post body");
+        client.assert(response.body.data.comments[0].content === "이것이 댓글입니다.", "Wrong post comment content");
+        client.assert(response.body.data.comments[0].userName === "테스터2", "Wrong post comment userName");
+        client.assert(response.body.data.comments[1].content === "이것이 댓글입니다.222", "Wrong post comment content");
+        client.assert(response.body.data.comments[1].userName === "테스터2", "Wrong post comment userName");
+        client.assert(response.body.data.comments[0].updateAt <= response.body.data.comments[1].updateAt, "Wrong post comment sequence")
+    });
+    client.log(response.body.data.comments[0].content);
+
+ %}
+
+### 3. 포스트 리스트 가져오기
+GET {{api}}/api/v2/community/postList?page=2&size=5&offset=0
+Content-Type: application/json
+Authorization: {{access_token}}
+
+> {%
+client.test("getPosts", function (){
+    client.assert(response.body.data.size === 5, "Wrong postList size");
+})
+ %}
+

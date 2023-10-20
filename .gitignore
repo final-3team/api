@@ -35,3 +35,8 @@ out/
 
 ### VS Code ###
 .vscode/
+
+
+### http request test ###
+http/http-client.env.json
+http/http-client.private.env.json

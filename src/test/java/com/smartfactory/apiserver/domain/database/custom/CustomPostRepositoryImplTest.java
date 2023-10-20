@@ -5,6 +5,7 @@ import com.smartfactory.apiserver.api.community.dto.CommunityDTO;
 import com.smartfactory.apiserver.config.database.DataSourceConfiguration;
 import com.smartfactory.apiserver.domain.database.repository.custom.CustomPostRepository;
 import com.smartfactory.apiserver.domain.database.repository.custom.CustomPostRepositoryImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
@@ -16,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @DataJpaTest                //해당 테스트에 deafult DB가 in-memory DB라 설정이 필요함.
 //@ActiveProfiles("com.mysql.cj.jdbc.Driver")
@@ -29,7 +31,8 @@ public class CustomPostRepositoryImplTest {
     @Test
     @Transactional(readOnly = true)
     void findPostList(){
-        Page<CommunityDTO.ReadPostListResponse> result = customPostRepository.findPosts(PageRequest.of(1, 10));
-        System.out.println("하");
+        Page<CommunityDTO.ReadPostListResponse> result = customPostRepository.findPosts(PageRequest.of(1, 1));
+        log.error(String.valueOf(result.getContent().get(0).getPostSeq()));
+
     }
 }

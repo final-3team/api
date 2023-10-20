@@ -1,6 +1,7 @@
 package com.smartfactory.apiserver.domain.database.repository.custom;
 
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPQLQuery;
 import com.smartfactory.apiserver.common.constant.CommonCode;
 import com.smartfactory.apiserver.domain.database.entity.PostEntity;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -58,30 +60,29 @@ public class CustomPostRepositoryImpl extends QuerydslRepositorySupport implemen
                 .limit(10)
                 .fetch();
 
-        System.out.println("----------------------------------------------------------------------");
-        System.out.println("querydsl문 결과");
-        System.out.println(results);
-        System.out.println(ReadPostListResponse.builder().posts(results).build());
         return ReadPostListResponse.builder().posts(results).build();*//*
         return null;
 
     }*/
 
     @Override
+    @Transactional(readOnly = true)
     public Page<ReadPostListResponse> findPosts(Pageable pageable) {
         try {
             QPostEntity postEntity = QPostEntity.postEntity;
             List<ReadPostListResponse> result = (List<ReadPostListResponse>) from(postEntity)
                     .where(postEntity.status.eq(CommonCode.PostStatus.ACTIVE))
                     .orderBy(postEntity.createAt.desc())
+                    .offset(pageable.getPageNumber() * pageable.getPageSize())
                     .limit(pageable.getPageSize())
                     .transform(groupBy(postEntity.postSeq).list(Projections.constructor(ReadPostListResponse.class
                             , postEntity.title
                             , postEntity.user.userName
                             , postEntity.postSeq)));
 
-            JPQLQuery<Long> count = from(postEntity).select(postEntity.count());
+            JPQLQuery<Long> count = from(postEntity).where(postEntity.status.eq(CommonCode.PostStatus.ACTIVE)).select(postEntity.count());
             long totalCount = count.fetchCount();
+
 
             return new PageImpl<>(result, pageable, totalCount);
         } catch (Exception e) {

@@ -27,8 +27,7 @@ public class CommunityController {
 
 
     @PostMapping(value = "/post", consumes = "application/json", produces = "application/json")
-    @ResponseBody
-    public ResponseEntity<?> CreatePost(@Valid @RequestBody CreatePostRequest createPostRequest) {
+    public ResponseEntity<?> createPost(@Valid @RequestBody CreatePostRequest createPostRequest) {
         communityService.createPost(createPostRequest);
         RestApiResponse restApiResponse = new RestApiResponse();
         restApiResponse.setResult(new BaseResponse(ApiResponseCode.SUCCESS));
@@ -36,8 +35,7 @@ public class CommunityController {
     }
 
     @GetMapping(value = "/post")
-    @ResponseBody
-    public ResponseEntity<?> GetPost(@Valid ReadPostAndCommentsRequest readPostAndCommentsRequest) {
+    public ResponseEntity<?> getPost(@Valid ReadPostAndCommentsRequest readPostAndCommentsRequest) {
         ReadPostAndCommentsResponse response = communityService.readPostAndComments(readPostAndCommentsRequest);
         RestApiResponse restApiResponse = new RestApiResponse();
         restApiResponse.setResult(new BaseResponse(ApiResponseCode.SUCCESS), response);
@@ -45,8 +43,7 @@ public class CommunityController {
     }
 
     @PutMapping(value = "/post", consumes = "application/json", produces = "application/json")
-    @ResponseBody
-    public ResponseEntity<?> UpdatePost(@Valid @RequestBody UpdatePostRequest updatePostRequest) {
+    public ResponseEntity<?> updatePost(@Valid @RequestBody UpdatePostRequest updatePostRequest) {
         communityService.updatePost(updatePostRequest);
         RestApiResponse restApiResponse = new RestApiResponse();
         restApiResponse.setResult(new BaseResponse(ApiResponseCode.SUCCESS));
@@ -54,8 +51,7 @@ public class CommunityController {
     }
 
     @DeleteMapping(value = "/post")
-    @ResponseBody
-    public ResponseEntity<?> DeletePost(@Valid DeletePostRequest deletePostRequest) {
+    public ResponseEntity<?> deletePost(@Valid DeletePostRequest deletePostRequest) {
         communityService.deletePost(deletePostRequest);
         RestApiResponse restApiResponse = new RestApiResponse();
         restApiResponse.setResult(new BaseResponse(ApiResponseCode.SUCCESS));
@@ -64,8 +60,7 @@ public class CommunityController {
 
 
     @PostMapping(value = "/comment", consumes = "application/json", produces = "application/json")
-    @ResponseBody
-    public ResponseEntity<?> CreateComment(@Valid @RequestBody CreateCommentRequest createCommentRequest) {
+    public ResponseEntity<?> createComment(@Valid @RequestBody CreateCommentRequest createCommentRequest) {
         communityService.createComment(createCommentRequest);
         RestApiResponse restApiResponse = new RestApiResponse();
         restApiResponse.setResult(new BaseResponse(ApiResponseCode.SUCCESS));
@@ -85,8 +80,7 @@ public class CommunityController {
     }*/
 
     @GetMapping(value = "/postList")
-    @ResponseBody
-    public ResponseEntity<?> GetPostList(@PageableDefault(size = 10) Pageable pageable) {
+    public ResponseEntity<?> getPostList(@PageableDefault(size = 10) Pageable pageable) {
 //        Page<ReadPostListResponse> response = communityService.getPosts(pageable);
         Page<ReadPostListResponse> response = communityService.getPosts(pageable);
         RestApiResponse restApiResponse = new RestApiResponse();

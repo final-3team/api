@@ -1,0 +1,36 @@
+### 1. 로그인
+POST {{api}}/api/v2/auth/sign-in
+Content-Type: application/json
+
+{
+  "userId": "{{userId}}",
+  "password": "{{password}}"
+}
+
+> {%
+    client.test("Sign-in", function () {
+        client.assert(response.status === 200, "Response status is not 200"); // 응답값이 200이면 통과
+        client.assert(response.contentType.mimeType === "application/json", "Expected 'application/json'"); // 응답값이 application/json이면 통과
+        client.assert(response.body.data.accessToken.trim().length > 0); // 토큰 길이가 0보다 크면 통과
+    });
+
+    client.log(response.body.data.accessToken.trim());
+    client.global.set("access_token", response.body.data.accessToken.trim());
+%}
+
+### 2. 견적서 작성
+POST {{api}}/api/v2/contract/estimate-contract
+Content-Type: application/json
+Authorization: {{access_token}}
+
+{
+  "deposit": 100000,
+  "productQuantity": 100,
+  "storeType": "COLD_STORAGE",
+  "warehouseArea": "SEOUL_A"
+}
+
+### 3. 사용자 견적서 가져오기
+GET {{api}}/api/v2/contract/estimate-contracts
+Content-Type: application/json
+Authorization: {{access_token}}
