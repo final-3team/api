@@ -1,6 +1,5 @@
 package com.smartfactory.apiserver;
 
-<<<<<<< HEAD
 import com.smartfactory.apiserver.api.community.dto.CommunityDTO;
 import com.smartfactory.apiserver.api.community.service.CommunityService;
 import lombok.extern.slf4j.Slf4j;
@@ -12,19 +11,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-=======
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
->>>>>>> parent of 6bc681d (junit 테스트 코드 update)
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+@DisplayName("API 테스트 케이스")
 @SpringBootTest
+@Slf4j
 class ApiServerApplicationTests {
 
+	@Autowired
+	private CommunityService communityService;
+
 	@Test
+	@Order(1)
+	@ExtendWith(InterceptorExtensionTest.class)
 	void contextLoads() {
 	}
 
-<<<<<<< HEAD
 	@BeforeEach
 	void beforeEach(){
 		System.out.println("각 테스트 들이 실행되기전 선 실행되어야하는 내용 처리");
@@ -37,7 +42,7 @@ class ApiServerApplicationTests {
 	@Order(2)
 	void getPostsTest(int page){
 		Page<CommunityDTO.ReadPostListResponse> result = communityService.getPosts(PageRequest.of(page, 1));
-		Assertions.assertEquals(15 - page, result.getContent().get(0).getPostSeq());		//게시판 seq 번호 확인
+		assertEquals(15 - page, result.getContent().get(0).getPostSeq());		//게시판 seq 번호 확인
 		assertEquals(result.getContent().get(0).getUserName(), "테스터2");			//게시판 작성자가 같은지
 //		assertTrue(page >= 1 && page <= 4);
 	}
@@ -47,6 +52,4 @@ class ApiServerApplicationTests {
 		System.out.println("각 테스트 들이 실행된 후 실행되어야하는 내용 처리");
 		//@AfterAll  각 테스트 메소드마다 한번만 실행
 	}
-=======
->>>>>>> parent of 6bc681d (junit 테스트 코드 update)
 }
