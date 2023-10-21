@@ -22,7 +22,8 @@ import static com.smartfactory.apiserver.api.community.dto.CommunityDTO.*;
 @RequestMapping("/api/v2/community")
 @Slf4j
 @RequiredArgsConstructor
-public class CommunityController {
+public class
+CommunityController {
     private final CommunityService communityService;
 
 

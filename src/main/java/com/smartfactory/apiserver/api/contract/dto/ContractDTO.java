@@ -1,7 +1,5 @@
 package com.smartfactory.apiserver.api.contract.dto;
 
-import com.smartfactory.apiserver.common.constant.CommonCode;
-import io.swagger.models.auth.In;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -38,7 +36,7 @@ public class ContractDTO {
     }
 
     @Data
-    public static class WriteEstimateContractRequest{
+    public static class WriteEstimateContractRequest {
         @NotNull
         private Integer deposit;
         @NotNull
@@ -49,16 +47,40 @@ public class ContractDTO {
         private Integer productQuantity;
     }
 
+    @Data
+    public static class WriteStoreContractRequest {
+        @NotNull
+        private Long storeContractSeq;
+        @NotNull
+        private String dateOfStore;
+    }
+
 
 
     @Data
     public static class GetStoreContractsRequest{
 
     }
+    @Data
+    @AllArgsConstructor
+    public static class GetStoreContracts{
+        @NotNull
+        private Long storeContractSeq;
+        @NotNull
+        private Date StoreDate;
+        @NotNull
+        private WarehouseArea warehouseArea;
+        @NotNull
+        private StoreType storeType;
+        @NotNull
+        private int productQuantity;
+    }
 
     @Data
-    public static class GetStoreContractsResponse{
-
+    @AllArgsConstructor
+    public static class GetStoreContractsResponse {
+        @NotNull
+        List<GetStoreContracts> contracts;
     }
 
 }

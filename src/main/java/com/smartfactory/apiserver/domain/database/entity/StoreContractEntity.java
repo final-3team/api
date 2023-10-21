@@ -28,18 +28,16 @@ public class StoreContractEntity {
     @JoinColumn(name = "customer_seq", referencedColumnName = "user_seq", nullable = false)
     private UserEntity customer;
     @ManyToOne
-    @JoinColumn(name = "staff_seq", referencedColumnName = "staff_seq", nullable = false)
+    @JoinColumn(name = "staff_seq", referencedColumnName = "staff_seq")
     private StaffEntity staff;
     @Column(name = "contract_status", length = 45, nullable = false)
     @Enumerated(EnumType.STRING)
     private ContractStatus contractStatus;
     @Column(name = "store_date")
-    @UpdateTimestamp
     private Date storeDate;
     @Column(name = "deposit", length = 10)
     private Integer deposit;
     @Column(name = "write_at")
-    @UpdateTimestamp
     private Date writeAt;
     @ManyToOne
     @JoinColumn(name = "location", referencedColumnName = "warehouse_seq", nullable = false)

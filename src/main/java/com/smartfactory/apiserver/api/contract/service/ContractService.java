@@ -9,6 +9,7 @@ public interface ContractService {
 
     void writeEstimateContract(WriteEstimateContractRequest request);
 
+    void writeStoreContract(WriteStoreContractRequest request);
 
     GetStoreContractsResponse getStoreContracts(GetStoreContractsRequest getStoreContractsRequest);
 }
