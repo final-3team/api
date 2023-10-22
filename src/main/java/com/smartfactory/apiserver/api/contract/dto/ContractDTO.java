@@ -17,42 +17,40 @@ public class ContractDTO {
     }
 
     @Data
-    @AllArgsConstructor
     public static class GetEstimateContractsResponse{
-        List<GetEstimateContract> contents;
+        private final List<GetEstimateContract> contents;
     }
 
     @Data
-    @AllArgsConstructor
     public static class GetEstimateContract{
         @NotNull
-        private Long id;
+        private final Long id;
         @NotNull
-        private StoreType classification;
+        private final StoreType classification;
         @NotNull
-        private WarehouseArea location;
+        private final WarehouseArea location;
         @NotNull
-        private Integer storingQuantity;
+        private final Integer storingQuantity;
     }
 
     @Data
     public static class WriteEstimateContractRequest {
         @NotNull
-        private Integer deposit;
+        private final Integer deposit;
         @NotNull
-        private String warehouseArea;
+        private  final String warehouseArea;
         @NotNull
-        private StoreType storeType;
+        private final StoreType storeType;
         @NotNull
-        private Integer productQuantity;
+        private final Integer productQuantity;
     }
 
     @Data
     public static class WriteStoreContractRequest {
         @NotNull
-        private Long storeContractSeq;
+        private final Long storeContractSeq;
         @NotNull
-        private String dateOfStore;
+        private final String dateOfStore;
     }
 
 
@@ -62,25 +60,31 @@ public class ContractDTO {
 
     }
     @Data
-    @AllArgsConstructor
     public static class GetStoreContracts{
         @NotNull
-        private Long storeContractSeq;
+        private final Long storeContractSeq;
         @NotNull
-        private Date StoreDate;
+        private final Date StoreDate;
         @NotNull
-        private WarehouseArea warehouseArea;
+        private final WarehouseArea warehouseArea;
         @NotNull
-        private StoreType storeType;
+        private final StoreType storeType;
         @NotNull
-        private int productQuantity;
+        private final int productQuantity;
     }
 
     @Data
-    @AllArgsConstructor
     public static class GetStoreContractsResponse {
         @NotNull
         List<GetStoreContracts> contracts;
+    }
+
+    @Data
+    public static class CreateContractTerminationRequest{
+        @NotNull
+        private final Long contractSeq;
+        @NotNull
+        private final String releaseDate;
     }
 
 }

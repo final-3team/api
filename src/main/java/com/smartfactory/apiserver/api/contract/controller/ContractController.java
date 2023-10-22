@@ -55,5 +55,13 @@ public class ContractController {
         return new ResponseEntity<>(restApiResponse, HttpStatus.OK);
     }
 
+    @PostMapping(value = "/contract-termination")
+    public ResponseEntity<?> createContractTermination(@Valid @RequestBody CreateContractTerminationRequest request) {
+        contractService.createContractTermination(request);
+        RestApiResponse restApiResponse = new RestApiResponse();
+        restApiResponse.setResult(new BaseResponse(ApiResponseCode.SUCCESS));
+        return new ResponseEntity<>(restApiResponse, HttpStatus.OK);
+    }
+
 
 }

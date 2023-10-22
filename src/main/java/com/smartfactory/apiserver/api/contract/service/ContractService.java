@@ -12,4 +12,6 @@ public interface ContractService {
     void writeStoreContract(WriteStoreContractRequest request);
 
     GetStoreContractsResponse getStoreContracts(GetStoreContractsRequest getStoreContractsRequest);
+
+    void createContractTermination(CreateContractTerminationRequest request);
 }

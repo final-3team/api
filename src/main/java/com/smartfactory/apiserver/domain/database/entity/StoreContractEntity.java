@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
@@ -38,6 +39,7 @@ public class StoreContractEntity {
     @Column(name = "deposit", length = 10)
     private Integer deposit;
     @Column(name = "write_at")
+    @CreationTimestamp
     private Date writeAt;
     @ManyToOne
     @JoinColumn(name = "location", referencedColumnName = "warehouse_seq", nullable = false)
@@ -47,11 +49,13 @@ public class StoreContractEntity {
     private StoreType storeType;
     @Column(name = "product_quantity", length = 10, nullable = false)
     private Integer productQuantity;
+    @Column(name = "release_at")
+    private Date releaseAt;
     @OneToMany(mappedBy = "storeContract", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<PalletEntity> palletEntityList;
 
     @Builder
-    public StoreContractEntity(Long contractSeq, UserEntity customer, StaffEntity staff, ContractStatus contractStatus, Date storeDate, Integer deposit, Date writeAt, WarehouseEntity storeLocation, StoreType storeType, Integer productQuantity) {
+    public StoreContractEntity(Long contractSeq, UserEntity customer, StaffEntity staff, ContractStatus contractStatus, Date storeDate, Integer deposit, Date writeAt, WarehouseEntity storeLocation, StoreType storeType, Integer productQuantity, Date releaseAt) {
         this.contractSeq = contractSeq;
         this.customer = customer;
         this.staff = staff;
@@ -62,5 +66,6 @@ public class StoreContractEntity {
         this.storeLocation = storeLocation;
         this.storeType = storeType;
         this.productQuantity = productQuantity;
+        this.releaseAt = releaseAt;
     }
 }

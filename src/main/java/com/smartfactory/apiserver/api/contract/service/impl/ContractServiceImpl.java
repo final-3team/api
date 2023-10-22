@@ -51,6 +51,22 @@ public class ContractServiceImpl implements ContractService {
     }
 
     @Override
+    public void createContractTermination(CreateContractTerminationRequest request) {
+        try {
+            StoreContractEntity storeContract = storeContractRepository.findById(request.getContractSeq())
+                    .orElseThrow(() -> new BusinessException(ApiResponseCode.FAILED_TO_FIND_STORE_CONTRACT, HttpStatus.BAD_REQUEST));
+            storeContract.setReleaseAt(Date.from(Instant.parse(request.getReleaseDate())));
+            storeContract = storeContractRepository.save(storeContract);
+        }catch (BusinessException e){
+            log.error(e.getMessage());
+            throw new BusinessException(e.getResponseCode(), e.getStatus());
+        }catch(Exception e){
+            log.error(e.getMessage());
+            throw new BusinessException(ApiResponseCode.UNKNWON, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public GetEstimateContractsResponse getEstimateContracts(GetEstimateContractsRequest request) {
         try{
@@ -87,7 +103,8 @@ public class ContractServiceImpl implements ContractService {
     @Override
     public void writeStoreContract(WriteStoreContractRequest request) {
         try {
-            StoreContractEntity storeContractEntity = storeContractRepository.findById(request.getStoreContractSeq()).orElseThrow(() -> new BusinessException(ApiResponseCode.FAILED_TO_FIND_STORE_CONTRACT, HttpStatus.BAD_REQUEST));
+            StoreContractEntity storeContractEntity = storeContractRepository.findById(request.getStoreContractSeq())
+                    .orElseThrow(() -> new BusinessException(ApiResponseCode.FAILED_TO_FIND_STORE_CONTRACT, HttpStatus.BAD_REQUEST));
             storeContractEntity.setContractStatus(ContractStatus.IN_CONTRACT);
             storeContractEntity.setStoreDate(Date.from(Instant.parse(request.getDateOfStore())));
             storeContractEntity = storeContractRepository.save(storeContractEntity);
