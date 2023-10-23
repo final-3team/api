@@ -76,7 +76,7 @@ public class ContractDTO {
     @Data
     public static class GetStoreContractsResponse {
         @NotNull
-        List<GetStoreContracts> contracts;
+        private final List<GetStoreContracts> contracts;
     }
 
     @Data
