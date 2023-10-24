@@ -40,3 +40,8 @@ out/
 ### http request test ###
 http/http-client.env.json
 http/http-client.private.env.json
+
+### DATABASE ###
+/src/main/resources/application-dev.properties
+/src/main/resources/application-local.properties
+/src/main/resources/application-prod.properties
