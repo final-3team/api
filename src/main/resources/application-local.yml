@@ -25,9 +25,9 @@ spring:
       pool-name: HikariPool-market-doctor
       maximum-pool-size: 16
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://222.106.31.248:3306/smartfactory?characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
-    username: smartfactory
-    password: miracom123!@#
+    url: ${local-url}
+    username: ${local-username}
+    password: ${local-password}
   messages:
     basename: i18n/messages
     encoding: UTF-8
