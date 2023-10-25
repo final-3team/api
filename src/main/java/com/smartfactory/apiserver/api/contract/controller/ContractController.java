@@ -31,7 +31,7 @@ public class ContractController {
     }
 
     @PostMapping(value = "/estimate-contract", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<?> writeEstimateContract(@Valid @RequestBody WriteEstimateContractRequest request) {
+    public ResponseEntity<?> writeEstimateContract(@RequestBody WriteEstimateContractRequest request) {
         contractService.writeEstimateContract(request);
         RestApiResponse restApiResponse = new RestApiResponse();
         restApiResponse.setResult(new BaseResponse(ApiResponseCode.SUCCESS));

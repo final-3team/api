@@ -25,6 +25,10 @@ public class StoreContractEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "contract_seq")
     private Long contractSeq;
+    @Column(name = "product_name")
+    private String productName;
+
+
     @ManyToOne
     @JoinColumn(name = "customer_seq", referencedColumnName = "user_seq", nullable = false)
     private UserEntity customer;
@@ -35,6 +39,7 @@ public class StoreContractEntity {
     @Enumerated(EnumType.STRING)
     private ContractStatus contractStatus;
     @Column(name = "store_date")
+    @CreationTimestamp
     private Date storeDate;
     @Column(name = "deposit", length = 10)
     private Integer deposit;

@@ -28,12 +28,16 @@ public class CustomContractRepositoryImpl extends QuerydslRepositorySupport impl
                             , storeContractEntity.contractStatus.eq(CommonCode.ContractStatus.BEFORE_CONTRACT)
                     )
                     .orderBy(storeContractEntity.writeAt.desc())
-                    .transform(groupBy(storeContractEntity.contractSeq).list(Projections.constructor(GetEstimateContract.class
-                            , storeContractEntity.contractSeq
-                            , storeContractEntity.storeType
-                            , storeContractEntity.storeLocation.warehouseArea
-                            , storeContractEntity.productQuantity
-                    )));
+                    .transform(groupBy(storeContractEntity.contractSeq).list(
+                            Projections.constructor(
+                                    GetEstimateContract.class
+                                , storeContractEntity.contractSeq
+                                , storeContractEntity.storeType
+                                , storeContractEntity.storeLocation.warehouseArea
+                                , storeContractEntity.productQuantity
+                            )
+                        )
+                    );
             GetEstimateContractsResponse response = new GetEstimateContractsResponse(data);
             return response;
         }catch (Exception e){

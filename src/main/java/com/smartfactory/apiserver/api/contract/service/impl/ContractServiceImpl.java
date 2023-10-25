@@ -86,7 +86,7 @@ public class ContractServiceImpl implements ContractService {
                     .staff(null)
                     .contractStatus(ContractStatus.BEFORE_CONTRACT)
                     .storeDate(null)
-                    .deposit(null)
+                    .deposit(request.getDeposit())
                     .writeAt(null)
                     .storeLocation(findWarehouseLocationByWarehouseArea(WarehouseArea.valueOf(request.getWarehouseArea())))
                     .storeType(request.getStoreType())
