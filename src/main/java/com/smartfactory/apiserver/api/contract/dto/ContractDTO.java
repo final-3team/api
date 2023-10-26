@@ -32,6 +32,10 @@ public class ContractDTO {
         private WarehouseArea warehouseArea;
         @NotNull
         private Integer productQuantity;
+        @NotNull
+        private String productName;
+        @NotNull
+        private Date StoreDate;
     }
 
     @Data
@@ -71,7 +75,7 @@ public class ContractDTO {
         @NotNull
         private final WarehouseArea warehouseArea;
         @NotNull
-        private final StoreType storeType;
+        private final String storeType;
         @NotNull
         private final int productQuantity;
     }

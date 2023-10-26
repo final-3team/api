@@ -35,6 +35,8 @@ public class CustomContractRepositoryImpl extends QuerydslRepositorySupport impl
                                 , storeContractEntity.storeType
                                 , storeContractEntity.storeLocation.warehouseArea
                                 , storeContractEntity.productQuantity
+                                    , storeContractEntity.productName
+                                    , storeContractEntity.storeDate
                             )
                         )
                     );
