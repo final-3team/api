@@ -26,6 +26,7 @@ public class CustomContractRepositoryImpl extends QuerydslRepositorySupport impl
             List<GetEstimateContract> data = (List<GetEstimateContract>) from(storeContractEntity)
                     .where(storeContractEntity.customer.userSeq.eq(userSeq)
                             , storeContractEntity.contractStatus.eq(CommonCode.ContractStatus.BEFORE_CONTRACT)
+                            .or(storeContractEntity.contractStatus.eq(CommonCode.ContractStatus.COMPLETE_CONTRACT))
                     )
                     .orderBy(storeContractEntity.writeAt.desc())
                     .transform(groupBy(storeContractEntity.contractSeq).list(
@@ -37,6 +38,7 @@ public class CustomContractRepositoryImpl extends QuerydslRepositorySupport impl
                                 , storeContractEntity.productQuantity
                                     , storeContractEntity.productName
                                     , storeContractEntity.storeDate
+                                    , storeContractEntity.contractStatus
                             )
                         )
                     );

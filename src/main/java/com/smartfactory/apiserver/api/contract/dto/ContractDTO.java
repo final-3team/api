@@ -36,6 +36,8 @@ public class ContractDTO {
         private String productName;
         @NotNull
         private Date StoreDate;
+        @NotNull
+        private Enum contractStatus;
     }
 
     @Data
